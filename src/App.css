@@ -1,38 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Lucida', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
 .App {
-  text-align: center;
+    height: 100%;
+    width: 100vw;
+    background: url('img/background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: linear-gradient(rgba(6, 16, 46, 0.8), rgba(0, 0, 0, 1));
+    z-index: 1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
+    z-index: 5;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.title {
+    color: rgb(232, 251, 252);
+    text-shadow: 5px 5px 7.5px rgba(0, 0, 0, 0.95);
+    font-size: 3rem;
+    margin: 2rem auto 0 auto;
+    text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.intro-text {
+    color: rgb(232, 251, 252);
+    text-shadow: 5px 5px 7.5px rgba(0, 0, 0, 0.95);
+    text-align: center;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    margin: 1.5rem auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.todos-list {
+    background: rgba(232, 251, 252, 0.9);
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.8);
+    border-radius: .5rem;
+    padding: 1.5rem;
+    margin: 5rem auto;
+    max-width: 700px;
+}
+
+.todo {
+    font-size: 1.25rem;
+    margin: .75rem auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    transition: .3s;
+}
+
+.todo .input {
+    background: none;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+}
+
+.todo .input:focus {
+    outline: none;
+}
+
+.timer-input {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+    transition: .3s;
+}
+
+.timer-box {
+    position: relative;
+    background: rgb(235, 252, 255);
+    padding: 3.5rem;
+    border-radius: .5rem;
+}
+
+.fa-window-close {
+    position: absolute; 
+    top: .75rem;
+    right: .75rem;
+    color: rgba(255, 0, 0, 0.5);
+    transition: .3s;
+}
+
+.fa-window-close:hover {
+    color: rgba(255, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+.fa-exclamation-circle {
+    color: rgb(255, 136, 0);
+}
+
+#timer-input {
+    margin: 1rem auto 0 auto;
+    padding: .1rem;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.418);
+    border: 1px solid rgba(0, 0, 0, 0.582);
+    outline: none;
+    border-radius: .2rem;
+}
+
+#set-timer-button {
+    background: rgba(49, 49, 255, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+    border: none;
+    outline: none;
+    border-radius: .2rem;
+    margin: 0 .5rem;
+    padding: .25rem .5rem;
+    transition: .3s;
+}
+
+#set-timer-button:hover {
+    cursor: pointer;
+    background: rgba(49, 49, 255, 0.8);
+    color: rgb(255, 255, 255);
+}
+
+#error-message {
+    position: absolute;
+    left: 25px;
+    bottom: 15px;
+    font-size: .85rem;
+    color: rgba(0, 0, 0, 0.8);
+    animation: shake .3s;
+}
+
+.buttons {
+    float: right;
+}
+
+.buttons > button {
+    background: none;
+    border-radius: .2rem;
+    outline: none;
+    border: none;
+    padding: .25rem .5rem;
+    margin: .125rem;
+    opacity: 0.3;
+    transition: .3s;
+}
+
+.buttons .timer-button, .buttons .timer-button-2 {
+    color: black;
+    display: none;
+}
+
+.buttons .active {
+    display: inline;
+}
+
+.buttons .complete-button {
+    color: green;
+}
+
+.buttons .delete-button {
+    color: red;
+}
+
+.buttons > button:hover {
+    color: rgb(212, 212, 212);
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.buttons > .timer-button:hover, .buttons > .timer-button-2:hover {
+    background: black;
+}
+
+.buttons > .complete-button:hover {
+    background: green;
+}
+
+.buttons > .delete-button:hover {
+    background: red;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+@media (max-width: 500px) {
+    .todos-list {
+        margin: 2.75rem 0;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .todo {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem auto 1.5rem auto;
+    }
 }
