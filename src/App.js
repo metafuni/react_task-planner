@@ -25,6 +25,7 @@ const App = () => {
 
   const [error, setError] = useState('');
   const [bell, setBell] = useState(false);
+  const [sound, setSound] = useState(true);
 
   //Define Variables
   const completedSound = new Audio('/completed.wav');
@@ -161,6 +162,15 @@ const App = () => {
     } else return;
   };
 
+  const toggleSound = () => {
+    let soundIcon = document.querySelector('.line-through');
+    if (sound === false) {
+      soundIcon.style.display = 'block';
+    } else {
+      soundIcon.style.display = 'none';
+    }
+  };
+
   useEffect(() => {
     console.log('something deleted!')
   }, [todos.deleted]);
@@ -169,6 +179,17 @@ const App = () => {
     <div className="App">
       <div className="overlay"></div>
       <div className="container">
+        <div className="top-buttons">
+          <img id="logo" src="./blank.png" alt="start a new session" onClick={() => {
+            window.location.reload();
+            return false;
+          }} />
+          <img id="sound-off" src="./sound-off.png" alt="toggle off alarm sounds" onClick={() => {
+            setSound(!sound);
+            toggleSound();
+          }} />
+          <span className="line-through"></span>
+        </div>
         <h1 className="title">
           React Task Planner
       </h1>
