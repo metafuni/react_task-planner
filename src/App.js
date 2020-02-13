@@ -39,7 +39,12 @@ const App = () => {
   };
 
   const completeTodo = (index) => {
-    completedSound.play();
+    if (sound === true) {
+      completedSound.play();
+    };
+
+    const todoLine = document.querySelectorAll('.todo');
+    todoLine[index].classList.remove('animate-text');
 
     const newTodos = [...todos];
     newTodos[index].completed = !newTodos[index].completed;
@@ -48,7 +53,10 @@ const App = () => {
 
   const deleteTodo = (index) => {
     setTodos(todos[index].deleted = true);
-    deleteSound.play();
+
+    if (sound === true) {
+      deleteSound.play();
+    };
 
     const newTodos = [...todos];
     newTodos[index].timer = 0;
@@ -108,7 +116,6 @@ const App = () => {
       newTodos[index].timer = timerValue;
       setTodos(newTodos);
       setError('');
-      setBell(!bell);
 
       const todoLine = document.querySelectorAll('.todo');
       todoLine[index].style.color = 'rgba(0, 75, 75, .7)';
@@ -137,14 +144,33 @@ const App = () => {
   const ringAlarm = (index) => {
     if (todos[index].deleted === false) {
       const now = new Date();
-      timerSound.play();
+
+      //try this
+      setBell(true);
+
+      if (sound === true) {
+        const window = document.getElementById('ring-box');
+        window.style.opacity = '1';
+        window.style.transform = 'translateX(12%)';
+
+        timerSound.play()
+        const playSound = setInterval(() => {
+          timerSound.play()
+        }, 1500);
+
+        setTimeout(() => {
+          clearInterval(playSound);
+          window.style.transform = 'translateX(-100%)';
+        }, 4500);
+      };
 
       setTimeout(() => {
         let minutes = now.getMinutes();
         if (minutes < 10) {
           minutes = '0' + minutes.toString();
         };
-        alert('Time is up! Did you complete ' + todos[index].text + ' by ' + now.getHours() + ':' + minutes + '?');
+
+        // alert('Time is up! Did you complete ' + todos[index].text + ' by ' + now.getHours() + ':' + minutes + '?');
 
         const todoLine = document.querySelectorAll('.todo');
         const bellIcon = document.querySelectorAll('.timer-button');
@@ -152,7 +178,7 @@ const App = () => {
         const deleteButton = document.querySelectorAll('.delete-button');
         const expiredDeleteButton = document.querySelectorAll('.delete-button-2');
 
-        todoLine[index].style.color = 'rgba(255, 0, 0, 0.8)';
+        todoLine[index].classList.add('animate-text');
 
         bellIcon[index].classList.remove('active');
         expiredBellIcon[index].classList.add('active');
@@ -214,6 +240,7 @@ const App = () => {
           )}
           <TodoForm addTodo={addTodo} />
         </div>
+        {bell ? <span id="ring-box"><p>Time is up! <br></br>Did you complete your task?</p></span> : null}
         <p className="extra-text">
           * On every change of the timer for your item an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of 'postponing'.
         <br></br><br></br>
