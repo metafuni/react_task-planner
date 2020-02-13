@@ -149,10 +149,6 @@ const App = () => {
       setBell(true);
 
       if (sound === true) {
-        const window = document.getElementById('ring-box');
-        window.style.opacity = '1';
-        window.style.transform = 'translateX(12%)';
-
         timerSound.play()
         const playSound = setInterval(() => {
           timerSound.play()
@@ -160,9 +156,16 @@ const App = () => {
 
         setTimeout(() => {
           clearInterval(playSound);
-          window.style.transform = 'translateX(-100%)';
         }, 4500);
       };
+
+      const window = document.getElementById('ring-box');
+      window.style.opacity = '1';
+      window.style.transform = 'translateX(12%)';
+
+      setTimeout(() => {
+        window.style.transform = 'translateX(-100%)';
+      }, 4500);
 
       setTimeout(() => {
         let minutes = now.getMinutes();

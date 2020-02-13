@@ -157,7 +157,7 @@ body {
 
 .timer-box {
     position: relative;
-    background: rgba(227, 235, 255, 0.85);
+    background: rgba(227, 235, 255, 1);
     padding: 3.5rem;
     border-radius: .5rem;
 }
@@ -378,6 +378,11 @@ body {
         transform: rotate(35deg);
         pointer-events: none;
         background: rgba(225, 0, 0, 0.8);
+    }
+
+    #ring-box {
+        width: 90%;
+        margin: 0 2.5%;
     }
 
     .todo {
