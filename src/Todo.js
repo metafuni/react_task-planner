@@ -10,7 +10,6 @@ const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, 
         <div className="buttons">
           <button className="timer-button active" onClick={() => timerTodo(index)}>
             <i className="fa fa-bell"></i>
-            {/* {todo.timer > 0 ? <i className="fa fa-bell-slash"></i> : <i className="fa fa-bell"></i>} */}
           </button>
           <button className="timer-button-2">
             <i className="fa fa-bell-slash" id="slash-bell"></i>
@@ -19,6 +18,9 @@ const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, 
             {todo.completed ? <i className="fa fa-undo"></i> : <i className="fa fa-check"></i>}
           </button>
           <button className="delete-button" onClick={() => deleteTodo(index)}>
+            <i className="fa fa-times"></i>
+          </button>
+          <button className="delete-button-2">
             <i className="fa fa-times"></i>
           </button>
         </div>

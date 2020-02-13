@@ -38,20 +38,28 @@ body {
 }
 
 .title {
-    color: rgb(232, 251, 252);
-    text-shadow: 5px 5px 7.5px rgba(0, 0, 0, 0.95);
+    color: rgb(181, 198, 255);
+    text-shadow: 7.5px 7.5px 7.5px rgba(206, 206, 206, 0.2);
     font-size: 3rem;
     margin: 2rem auto 0 auto;
     text-align: center;
 }
 
-.intro-text {
-    color: rgb(232, 251, 252);
+.intro-text, .extra-text {
+    color: rgb(213, 253, 255);
     text-shadow: 5px 5px 7.5px rgba(0, 0, 0, 0.95);
     text-align: center;
     font-size: 1.25rem;
     line-height: 1.5rem;
     margin: 1.5rem auto;
+}
+
+.extra-text {
+    color: rgba(255, 255, 255, 0.637);
+    margin-top: -15px;
+    font-size: .9rem;
+    font-style: italic;
+    line-height: 1rem;
 }
 
 .todos-list {
@@ -176,7 +184,7 @@ body {
     display: none;
 }
 
-.buttons .active {
+.buttons > .active {
     display: inline;
 }
 
@@ -184,8 +192,12 @@ body {
     color: green;
 }
 
-.buttons .delete-button {
+.buttons .delete-button, .buttons .delete-button-2 {
     color: red;
+}
+
+.buttons .delete-button-2 {
+    display: none;
 }
 
 .buttons > button:hover {
@@ -194,8 +206,15 @@ body {
     cursor: pointer;
 }
 
-.buttons > .timer-button:hover, .buttons > .timer-button-2:hover {
+.buttons > .timer-button:hover {
     background: black;
+}
+
+.buttons > .timer-button-2, .buttons > .timer-button-2:hover {
+    background: rgba(100, 100, 100, 0.8);
+    color: black;
+    opacity: 0.3;
+    cursor: auto;
 }
 
 .buttons > .complete-button:hover {
@@ -204,6 +223,13 @@ body {
 
 .buttons > .delete-button:hover {
     background: red;
+}
+
+.buttons > .delete-button-2, .buttons > .delete-button-2:hover {
+    color: rgba(230, 230, 230, 0.8);
+    background: rgba(255, 0, 0, 0.8);
+    opacity: 0.3;
+    cursor: auto;
 }
 
 @keyframes shake {
@@ -225,13 +251,23 @@ body {
         margin: 2.75rem 0;
     }
 
-    .title {
-        font-size: 2rem;
+    .intro-text {
+        font-size: 1.15rem;
+    }
+
+    .extra-text {
+        font-size: .8rem;
     }
 
     .todo {
         display: flex;
         flex-direction: column;
         margin: 1rem auto 1.5rem auto;
+    }
+}
+
+@media (min-width: 500px) {
+    .extra-text {
+        max-width: 700px;
     }
 }

@@ -9,15 +9,18 @@ const App = () => {
   const [todos, setTodos] = useState([{
     text: 'make coffee',
     completed: false,
-    timer: 0
+    timer: 0,
+    deleted: false
   }, {
     text: 'HR meeting',
     completed: false,
-    timer: 0
+    timer: 0,
+    deleted: false
   }, {
     text: 'administration',
     completed: false,
-    timer: 0
+    timer: 0,
+    deleted: false
   }]);
 
   const [error, setError] = useState('');
@@ -43,6 +46,7 @@ const App = () => {
   };
 
   const deleteTodo = (index) => {
+    setTodos(todos[index].deleted = true);
     deleteSound.play();
 
     const newTodos = [...todos];
@@ -108,8 +112,7 @@ const App = () => {
       const todoLine = document.querySelectorAll('.todo');
       todoLine[index].style.color = 'rgba(0, 75, 75, .7)';
 
-      // todoLine[index].append(" (" + alarmTime[0] + ": " + alarmTime[1] + ")");
-      todoLine[index].append('*');
+      todoLine[index].prepend('*');
 
     } else {
       setError('Please enter a valid time');
@@ -131,26 +134,36 @@ const App = () => {
 
   //Ring Alarm function
   const ringAlarm = (index) => {
-    const now = new Date();
-    timerSound.play();
+    if (todos[index].deleted === false) {
+      const now = new Date();
+      timerSound.play();
 
-    setTimeout(() => {
-      alert('time is up! Did you complete: ' + todos[index].text + ' by ' + now.getHours() + ':' + now.getMinutes() + '?');
+      setTimeout(() => {
+        let minutes = now.getMinutes();
+        if (minutes < 10) {
+          minutes = '0' + minutes.toString();
+        };
+        alert('Time is up! Did you complete ' + todos[index].text + ' by ' + now.getHours() + ':' + minutes + '?');
 
-      const todoLine = document.querySelectorAll('.todo');
-      const bellIcon = document.querySelectorAll('.timer-button');
-      const expiredBellIcon = document.querySelectorAll('.timer-button-2');
+        const todoLine = document.querySelectorAll('.todo');
+        const bellIcon = document.querySelectorAll('.timer-button');
+        const expiredBellIcon = document.querySelectorAll('.timer-button-2');
+        const deleteButton = document.querySelectorAll('.delete-button');
+        const expiredDeleteButton = document.querySelectorAll('.delete-button-2');
 
-      todoLine[index].style.color = 'rgba(255, 0, 0, 0.8)';
-      bellIcon[index].classList.remove('active');
-      expiredBellIcon[index].classList.add('active');
-      expiredBellIcon[index].style.color = 'rgba(255, 0, 0, 0.8)';
-    }, 1000);
+        todoLine[index].style.color = 'rgba(255, 0, 0, 0.8)';
+
+        bellIcon[index].classList.remove('active');
+        expiredBellIcon[index].classList.add('active');
+        deleteButton[index].style.display = 'none';
+        expiredDeleteButton[index].style.display = 'inline';
+      }, 1000);
+    } else return;
   };
 
   useEffect(() => {
-    console.log('something changed, added or deleted!');
-  }, [todos.length]);
+    console.log('something deleted!')
+  }, [todos.deleted]);
 
   return (
     <div className="App">
@@ -180,6 +193,12 @@ const App = () => {
           )}
           <TodoForm addTodo={addTodo} />
         </div>
+        <p className="extra-text">
+          * On every change of the timer for your item an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of 'postponing'.
+        <br></br><br></br>
+          * Once the alarm rang for your task,
+          there is no possibility to delete or amend the item. In this way you will be able to see what you achieved throughout, and by the end of the day.
+      </p>
       </div>
     </div>
   );
