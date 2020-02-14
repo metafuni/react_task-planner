@@ -339,7 +339,7 @@ body {
 /* Animations */
 
 .animate-text {
-    animation: flash 2s infinite ease-in-out;
+    animation: flash 1.5s 3 ease-in-out;
 }
 
 @keyframes shake {

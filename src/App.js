@@ -31,7 +31,7 @@ const App = () => {
   const [sound, setSound] = useState(true);
   const [stateLength, setStateLength] = useState(todos.length);
 
-  //Define Variables
+  //Define sound constants
   const completedSound = new Audio('/completed.wav');
   const deleteSound = new Audio('/delete.wav');
   const timerSound = new Audio('/submit.wav');
@@ -52,11 +52,8 @@ const App = () => {
     todoLine[index].classList.remove('animate-text');
 
     const newTodos = [...todos];
-    // newTodos[index].completed = !newTodos[index].completed;
-    
     newTodos[index].completed === undefined ? newTodos[index].completed = true : newTodos[index].completed = !newTodos[index].completed;
-
-
+    
     setTodos(newTodos);
   };
 
@@ -77,10 +74,9 @@ const App = () => {
     setBell(false);
   };
 
-  //Define Timer Constants
+  //Define Timer Variables
   let timerValue;
   let delay;
-  let alarmTime;
 
   //Timer Functions
 
@@ -108,12 +104,12 @@ const App = () => {
     };
   };
 
+  //Convert input time and set delay
   const setTime = (e) => {
     const inputTime = e.target.value.split(":");
     const inputHours = parseInt(inputTime[0], 10) * 3600;
     const inputMinutes = parseInt(inputTime[1], 10) * 60;
     delay = (inputHours + inputMinutes);
-    alarmTime = inputTime;
   };
 
   const setAlarm = (index) => {
@@ -142,8 +138,6 @@ const App = () => {
     timerWindow[index].style.opacity = '0';
     timerWindow[index].style.pointerEvents = 'none';
 
-    // console.log(timerValue);
-
     setTimeout(() => {
       ringAlarm(index);
     }, timerValue);
@@ -151,8 +145,7 @@ const App = () => {
 
   //Ring Alarm function
   const ringAlarm = (index) => {
-    if (todos[index].deleted === false) {
-      const now = new Date();
+    if (todos[index].deleted === false || !todos[index].deleted) {
 
       //try this
       setBell(true);
@@ -176,6 +169,7 @@ const App = () => {
         window.style.transform = 'translateX(-100%)';
       }, 4500);
 
+      //Add animation on todo-text and change buttons on ring
       setTimeout(() => {
         const todoLine = document.querySelectorAll('.todo');
         const bellIcon = document.querySelectorAll('.timer-button');
@@ -189,22 +183,30 @@ const App = () => {
         expiredBellIcon[index].classList.add('active');
         deleteButton[index].style.display = 'none';
         expiredDeleteButton[index].style.display = 'inline';
-      }, 1000);
+      }, 250);
     } else return;
   };
 
+  //Toggle Sound via Button
   const toggleSound = () => {
     let soundIcon = document.querySelector('.line-through');
-    if (sound === false) {
-      soundIcon.style.display = 'block';
-    } else {
-      soundIcon.style.display = 'none';
-    }
+    sound === false ? soundIcon.style.display = 'block' : soundIcon.style.display = 'none';
   };
 
-  useEffect(() => {
-    console.log(todos);
-  },[todos]);
+  // useEffect(() => {
+  //   if (stateLength > todos.length) {
+  //     for (let i = 0; i < todos.length; i ++) {
+  //       if (todos[i].stars > 0) {
+  //         setAlarm(i);
+  //       };
+  //     };
+  //     setStateLength(todos.length);
+  //   }
+  // },[todos.length]);
+
+  // useEffect(() => {
+  //   console.log(todos); 
+  // }, [todos]);
 
   return (
     <div className="App">
