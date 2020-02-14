@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, deleteTodo }) => {
     return (
       <div style={{
-        color: todo.completed ? 'green' : '',
-        textDecoration: todo.completed ? 'line-through' : ''
+        color: todo.completed ? 'green' : todo.stars > 0 ? 'rgba(0, 75, 75, .7)' : 'black',
+        textDecoration: todo.completed ? 'line-through' : '',
       }} className="todo">
         {todo.text}
+        {todo.stars > 0 ? ' *' : ''}
+        {todo.stars > 1 ? <span id="stars-amount">({todo.stars})</span> : null}
         <div className="buttons">
           <button className="timer-button active" onClick={() => timerTodo(index)}>
             <i className="fa fa-bell"></i>

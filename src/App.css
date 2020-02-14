@@ -163,6 +163,12 @@ body {
     outline: none;
 }
 
+#stars-amount {
+    position: absolute;
+    margin-top: .25rem;
+    font-size: .55rem;
+}
+
 /* Modal Set Timer */
 
 .timer-input {

@@ -10,22 +10,26 @@ const App = () => {
     text: 'make coffee',
     completed: false,
     timer: 0,
-    deleted: false
+    deleted: false,
+    stars: 0
   }, {
     text: 'HR meeting',
     completed: false,
     timer: 0,
-    deleted: false
+    deleted: false,
+    stars: 0
   }, {
     text: 'administration',
     completed: false,
     timer: 0,
-    deleted: false
+    deleted: false,
+    stars: 0
   }]);
 
   const [error, setError] = useState('');
   const [bell, setBell] = useState(false);
   const [sound, setSound] = useState(true);
+  const [stateLength, setStateLength] = useState(todos.length);
 
   //Define Variables
   const completedSound = new Audio('/completed.wav');
@@ -36,6 +40,7 @@ const App = () => {
   const addTodo = (text) => {
     const newTodos = [...todos, { text }];
     setTodos(newTodos);
+    setStateLength(todos.length);
   };
 
   const completeTodo = (index) => {
@@ -47,7 +52,11 @@ const App = () => {
     todoLine[index].classList.remove('animate-text');
 
     const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
+    // newTodos[index].completed = !newTodos[index].completed;
+    
+    newTodos[index].completed === undefined ? newTodos[index].completed = true : newTodos[index].completed = !newTodos[index].completed;
+
+
     setTodos(newTodos);
   };
 
@@ -64,6 +73,7 @@ const App = () => {
     newTodos[index].timer = 0;
     newTodos.splice(index, 1);
     setTodos(newTodos);
+    setStateLength(todos.length);
     setBell(false);
   };
 
@@ -119,10 +129,7 @@ const App = () => {
       setTodos(newTodos);
       setError('');
 
-      const todoLine = document.querySelectorAll('.todo');
-      todoLine[index].style.color = 'rgba(0, 75, 75, .7)';
-
-      todoLine[index].prepend('*');
+      todos[index].stars ? todos[index].stars++ : todos[index].stars = 1;
 
     } else {
       setError('Please enter a valid time');
@@ -135,7 +142,7 @@ const App = () => {
     timerWindow[index].style.opacity = '0';
     timerWindow[index].style.pointerEvents = 'none';
 
-    console.log(timerValue);
+    // console.log(timerValue);
 
     setTimeout(() => {
       ringAlarm(index);
@@ -194,6 +201,10 @@ const App = () => {
       soundIcon.style.display = 'none';
     }
   };
+
+  useEffect(() => {
+    console.log(todos);
+  },[todos]);
 
   return (
     <div className="App">
