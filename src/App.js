@@ -53,6 +53,8 @@ const App = () => {
 
   const deleteTodo = (index) => {
     setTodos(todos[index].deleted = true);
+    setTodos(todos[index].completed = false);
+    setTodos(todos[index].timer = undefined);
 
     if (sound === true) {
       deleteSound.play();
@@ -168,13 +170,6 @@ const App = () => {
       }, 4500);
 
       setTimeout(() => {
-        let minutes = now.getMinutes();
-        if (minutes < 10) {
-          minutes = '0' + minutes.toString();
-        };
-
-        // alert('Time is up! Did you complete ' + todos[index].text + ' by ' + now.getHours() + ':' + minutes + '?');
-
         const todoLine = document.querySelectorAll('.todo');
         const bellIcon = document.querySelectorAll('.timer-button');
         const expiredBellIcon = document.querySelectorAll('.timer-button-2');
@@ -200,23 +195,36 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('something deleted!')
-  }, [todos.deleted]);
-
   return (
     <div className="App">
       <div className="overlay"></div>
       <div className="container">
         <div className="top-buttons">
-          <img id="logo" src="./blank.png" alt="start a new session" onClick={() => {
-            window.location.reload();
-            return false;
-          }} />
-          <img id="sound-off" src="./sound-off.png" alt="toggle off alarm sounds" onClick={() => {
-            setSound(!sound);
-            toggleSound();
-          }} />
+          <img
+            id="logo"
+            src="./blank.png"
+            alt="start a new session"
+            onMouseOver={() => {document.getElementById('new-tooltip').style.opacity = '1'}}
+            onMouseOut={() => {document.getElementById('new-tooltip').style.opacity = '0'}}
+            onClick={() => {
+              document.getElementById('new-tooltip').style.opacity = '0'
+              window.location.reload();
+              return false;
+            }}
+          />
+          <span id="new-tooltip">start a new page</span>
+          <img 
+            id="sound-off" 
+            src="./sound-off.png" 
+            alt="toggle off alarm sounds" 
+            onMouseOver={() => {document.getElementById('sound-tooltip').style.opacity = '1'}}
+            onMouseOut={() => {document.getElementById('sound-tooltip').style.opacity = '0'}}
+            onClick={() => {
+              setSound(!sound);
+              toggleSound();
+            }} 
+          />
+          <span id="sound-tooltip">toggle sound</span>
           <span className="line-through"></span>
         </div>
         <h1 className="title">
