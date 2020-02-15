@@ -285,12 +285,12 @@ body {
 
 .buttons .timer-button, .buttons .timer-button-2 {
     color: black;
-    display: none;
+    /* display: none; */
 }
 
-.buttons > .active {
+/* .buttons > .active {
     display: inline;
-}
+} */
 
 .buttons .complete-button {
     color: green;
@@ -300,9 +300,9 @@ body {
     color: red;
 }
 
-.buttons .delete-button-2 {
+/* .buttons .delete-button-2 {
     display: none;
-}
+} */
 
 .buttons > button:hover {
     color: rgb(212, 212, 212);
@@ -338,9 +338,9 @@ body {
 
 /* Animations */
 
-.animate-text {
+/* .animate-text {
     animation: flash 1.5s 3 ease-in-out;
-}
+} */
 
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }

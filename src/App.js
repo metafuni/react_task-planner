@@ -6,25 +6,28 @@ import TodoForm from './TodoForm';
 const App = () => {
 
   //Define State
-  const [todos, setTodos] = useState([{
-    text: 'make coffee',
-    completed: false,
-    timer: 0,
-    deleted: false,
-    stars: 0
-  }, {
-    text: 'HR meeting',
-    completed: false,
-    timer: 0,
-    deleted: false,
-    stars: 0
-  }, {
-    text: 'administration',
-    completed: false,
-    timer: 0,
-    deleted: false,
-    stars: 0
-  }]);
+  // const [todos, setTodos] = useState([{
+  //   text: 'make coffee',
+  //   completed: false,
+  //   timer: 0,
+  //   deleted: false,
+  //   stars: 0
+  // }, {
+  //   text: 'HR meeting',
+  //   completed: false,
+  //   timer: 0,
+  //   deleted: false,
+  //   stars: 0
+  // }, {
+  //   text: 'administration',
+  //   completed: false,
+  //   timer: 0,
+  //   deleted: false,
+  //   stars: 0
+  // }]);
+
+  //test code 
+  const [todos, setTodos] = useState([]);
 
   const [error, setError] = useState('');
   const [bell, setBell] = useState(false);
@@ -53,7 +56,7 @@ const App = () => {
 
     const newTodos = [...todos];
     newTodos[index].completed === undefined ? newTodos[index].completed = true : newTodos[index].completed = !newTodos[index].completed;
-    
+
     setTodos(newTodos);
   };
 
@@ -146,44 +149,49 @@ const App = () => {
   //Ring Alarm function
   const ringAlarm = (index) => {
     if (todos[index].deleted === false || !todos[index].deleted) {
+      if (todos[index].timer !== -10) {
+        //test code
+        todos[index].timer = -1;
 
-      //try this
-      setBell(true);
+        setBell(true);
 
-      if (sound === true) {
-        timerSound.play()
-        const playSound = setInterval(() => {
+        if (sound === true) {
           timerSound.play()
-        }, 1500);
+          const playSound = setInterval(() => {
+            timerSound.play()
+          }, 1500);
+
+          setTimeout(() => {
+            clearInterval(playSound);
+          }, 4500);
+        };
+
+        const window = document.getElementById('ring-box');
+        window.style.opacity = '1';
+        window.style.transform = 'translateX(12%)';
 
         setTimeout(() => {
-          clearInterval(playSound);
+          window.style.transform = 'translateX(-100%)';
         }, 4500);
+
+        todos[index].timer = -10;
+
+        //Add animation on todo-text and change buttons on ring
+        // setTimeout(() => {
+        // const todoLine = document.querySelectorAll('.todo');
+        // const bellIcon = document.querySelectorAll('.timer-button');
+        // const expiredBellIcon = document.querySelectorAll('.timer-button-2');
+        // const deleteButton = document.querySelectorAll('.delete-button');
+        // const expiredDeleteButton = document.querySelectorAll('.delete-button-2');
+
+        // todoLine[index].classList.add('animate-text');
+
+        // bellIcon[index].classList.remove('active');
+        // expiredBellIcon[index].classList.add('active');
+        // deleteButton[index].style.display = 'none';
+        // expiredDeleteButton[index].style.display = 'inline';
+        // }, 250);
       };
-
-      const window = document.getElementById('ring-box');
-      window.style.opacity = '1';
-      window.style.transform = 'translateX(12%)';
-
-      setTimeout(() => {
-        window.style.transform = 'translateX(-100%)';
-      }, 4500);
-
-      //Add animation on todo-text and change buttons on ring
-      setTimeout(() => {
-        const todoLine = document.querySelectorAll('.todo');
-        const bellIcon = document.querySelectorAll('.timer-button');
-        const expiredBellIcon = document.querySelectorAll('.timer-button-2');
-        const deleteButton = document.querySelectorAll('.delete-button');
-        const expiredDeleteButton = document.querySelectorAll('.delete-button-2');
-
-        todoLine[index].classList.add('animate-text');
-
-        bellIcon[index].classList.remove('active');
-        expiredBellIcon[index].classList.add('active');
-        deleteButton[index].style.display = 'none';
-        expiredDeleteButton[index].style.display = 'inline';
-      }, 250);
     } else return;
   };
 
@@ -194,6 +202,7 @@ const App = () => {
   };
 
   // useEffect(() => {
+  //  console.log(todos);
   //   if (stateLength > todos.length) {
   //     for (let i = 0; i < todos.length; i ++) {
   //       if (todos[i].stars > 0) {
@@ -204,9 +213,9 @@ const App = () => {
   //   }
   // },[todos.length]);
 
-  // useEffect(() => {
-  //   console.log(todos); 
-  // }, [todos]);
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
   return (
     <div className="App">
@@ -217,25 +226,27 @@ const App = () => {
             id="logo"
             src="./blank.png"
             alt="start a new session"
-            onMouseOver={() => {document.getElementById('new-tooltip').style.opacity = '1'}}
-            onMouseOut={() => {document.getElementById('new-tooltip').style.opacity = '0'}}
+            onMouseOver={() => { document.getElementById('new-tooltip').style.opacity = '1' }}
+            onMouseOut={() => { document.getElementById('new-tooltip').style.opacity = '0' }}
             onClick={() => {
-              document.getElementById('new-tooltip').style.opacity = '0'
-              window.location.reload();
-              return false;
+              document.getElementById('new-tooltip').style.opacity = '0';
+              setTodos([]);
+              // or refresh the whole page by:
+              // window.location.reload();
+              // return false;
             }}
           />
           <span id="new-tooltip">start a new page</span>
-          <img 
-            id="sound-off" 
-            src="./sound-off.png" 
-            alt="toggle off alarm sounds" 
-            onMouseOver={() => {document.getElementById('sound-tooltip').style.opacity = '1'}}
-            onMouseOut={() => {document.getElementById('sound-tooltip').style.opacity = '0'}}
+          <img
+            id="sound-off"
+            src="./sound-off.png"
+            alt="toggle off alarm sounds"
+            onMouseOver={() => { document.getElementById('sound-tooltip').style.opacity = '1' }}
+            onMouseOut={() => { document.getElementById('sound-tooltip').style.opacity = '0' }}
             onClick={() => {
               setSound(!sound);
               toggleSound();
-            }} 
+            }}
           />
           <span id="sound-tooltip">toggle sound</span>
           <span className="line-through"></span>
@@ -266,7 +277,7 @@ const App = () => {
         </div>
         {bell ? <span id="ring-box"><p>Time is up! <br></br>Did you complete your task?</p></span> : null}
         <p className="extra-text">
-          * On every change of the timer for your item an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of 'postponing'.
+          * On every attempt of changing the timer for your item, an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of 'postponing'. Once the timer is set, the alarm will ring at the first submitted time. 
         <br></br><br></br>
           * Once the alarm rang for your task,
           there is no possibility to delete or amend the item. In this way you will be able to see what you achieved throughout, and by the end of the day.
