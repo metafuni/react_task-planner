@@ -5,44 +5,29 @@ const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, 
     <div style={{
       color: todo.completed ? 'green' : todo.stars > 0 ? 'rgba(0, 75, 75, .7)' : 'black',
       textDecoration: todo.completed ? 'line-through' : '',
-      animation: todo.timer === -1 ? 'flash 1.1s 4 ease-in-out' : 'none'
+      animation: todo.timer === -1 ? 'flash 1.15s 4 ease-in-out' : 'none'
     }} className="todo">
       {todo.text}
       {todo.stars > 0 ? ' *' : ''}
       {todo.stars > 1 ? <span id="stars-amount">({todo.stars})</span> : null}
       <div className="buttons">
 
-        {/* test code */}
         {todo.timer < 0 ? <button className="timer-button-2">
           <i className="fa fa-bell-slash" id="slash-bell"></i>
         </button> : <button className="timer-button" onClick={() => timerTodo(index)}>
           <i className="fa fa-bell"></i>
         </button>}
 
-        {/* <button className="timer-button active" onClick={() => timerTodo(index)}>
-          <i className="fa fa-bell"></i>
-        </button>
-        <button className="timer-button-2">
-          <i className="fa fa-bell-slash" id="slash-bell"></i>
-        </button> */}
         <button className="complete-button" onClick={() => completeTodo(index)}>
           {todo.completed ? <i className="fa fa-undo"></i> : <i className="fa fa-check"></i>}
         </button>
-
-        {/* test code */}
+        
         {todo.timer < 0 ?
           <button className="delete-button-2">
             <i className="fa fa-times"></i>
           </button> : <button className="delete-button" onClick={() => deleteTodo(index)}>
             <i className="fa fa-times"></i>
           </button>}
-
-        {/* <button className="delete-button" onClick={() => deleteTodo(index)}>
-            <i className="fa fa-times"></i>
-          </button>
-          <button className="delete-button-2">
-            <i className="fa fa-times"></i>
-          </button> */}
       </div>
       <span className="timer-input">
         <div className="timer-box">

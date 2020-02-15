@@ -6,35 +6,15 @@ import TodoForm from './TodoForm';
 const App = () => {
 
   //Define State
-  // const [todos, setTodos] = useState([{
-  //   text: 'make coffee',
-  //   completed: false,
-  //   timer: 0,
-  //   deleted: false,
-  //   stars: 0
-  // }, {
-  //   text: 'HR meeting',
-  //   completed: false,
-  //   timer: 0,
-  //   deleted: false,
-  //   stars: 0
-  // }, {
-  //   text: 'administration',
-  //   completed: false,
-  //   timer: 0,
-  //   deleted: false,
-  //   stars: 0
-  // }]);
-
-  //test code 
   const [todos, setTodos] = useState([]);
 
+  //Global State Variables
   const [error, setError] = useState('');
   const [bell, setBell] = useState(false);
   const [sound, setSound] = useState(true);
-  const [stateLength, setStateLength] = useState(todos.length);
+  // const [stateLength, setStateLength] = useState(todos.length);
 
-  //Define sound constants
+  //Define Sound Constants
   const completedSound = new Audio('/completed.wav');
   const deleteSound = new Audio('/delete.wav');
   const timerSound = new Audio('/submit.wav');
@@ -43,7 +23,7 @@ const App = () => {
   const addTodo = (text) => {
     const newTodos = [...todos, { text }];
     setTodos(newTodos);
-    setStateLength(todos.length);
+    // setStateLength(todos.length);
   };
 
   const completeTodo = (index) => {
@@ -51,17 +31,13 @@ const App = () => {
       completedSound.play();
     };
 
-    const todoLine = document.querySelectorAll('.todo');
-    todoLine[index].classList.remove('animate-text');
-
     const newTodos = [...todos];
     newTodos[index].completed === undefined ? newTodos[index].completed = true : newTodos[index].completed = !newTodos[index].completed;
-
     setTodos(newTodos);
   };
 
   const deleteTodo = (index) => {
-    setTodos(todos[index].deleted = true);
+    // setTodos(todos[index].deleted = true);
     setTodos(todos[index].completed = false);
     setTodos(todos[index].timer = undefined);
 
@@ -70,14 +46,15 @@ const App = () => {
     };
 
     const newTodos = [...todos];
-    newTodos[index].timer = 0;
+    // is the following really needed???
+    // newTodos[index].timer = 0; 
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    setStateLength(todos.length);
+    // setStateLength(todos.length);
     setBell(false);
   };
 
-  //Define Timer Variables
+  //Define Timer Variables for Conversion
   let timerValue;
   let delay;
 
@@ -115,8 +92,8 @@ const App = () => {
     delay = (inputHours + inputMinutes);
   };
 
+  //Time till alarm needs to go off
   const setAlarm = (index) => {
-    //Time till alarm needs to go off
     const now = new Date();
     const currentTime = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
     timerValue = ((currentTime - delay) * -1) * 1000;
@@ -135,9 +112,8 @@ const App = () => {
       return;
     };
 
-    //Close window
+    //Close Modal Window
     const timerWindow = document.querySelectorAll('.timer-input');
-
     timerWindow[index].style.opacity = '0';
     timerWindow[index].style.pointerEvents = 'none';
 
@@ -146,11 +122,11 @@ const App = () => {
     }, timerValue);
   };
 
-  //Ring Alarm function
+  //Ring Alarm Function
   const ringAlarm = (index) => {
-    if (todos[index].deleted === false || !todos[index].deleted) {
-      if (todos[index].timer !== -10) {
-        //test code
+      // in case you only want the first submitted alarm to be ringing and cancel every after, do this if statement:
+      // if (todos[index].timer !== -10) {
+
         todos[index].timer = -1;
 
         setBell(true);
@@ -175,43 +151,14 @@ const App = () => {
         }, 4500);
 
         todos[index].timer = -10;
-
-        //Add animation on todo-text and change buttons on ring
-        // setTimeout(() => {
-        // const todoLine = document.querySelectorAll('.todo');
-        // const bellIcon = document.querySelectorAll('.timer-button');
-        // const expiredBellIcon = document.querySelectorAll('.timer-button-2');
-        // const deleteButton = document.querySelectorAll('.delete-button');
-        // const expiredDeleteButton = document.querySelectorAll('.delete-button-2');
-
-        // todoLine[index].classList.add('animate-text');
-
-        // bellIcon[index].classList.remove('active');
-        // expiredBellIcon[index].classList.add('active');
-        // deleteButton[index].style.display = 'none';
-        // expiredDeleteButton[index].style.display = 'inline';
-        // }, 250);
-      };
-    } else return;
+      // };
   };
 
   //Toggle Sound via Button
   const toggleSound = () => {
-    let soundIcon = document.querySelector('.line-through');
-    sound === false ? soundIcon.style.display = 'block' : soundIcon.style.display = 'none';
+    let lineThrough = document.querySelector('.line-through');
+    sound === true ? lineThrough.style.display = 'none' : lineThrough.style.display = 'block';
   };
-
-  // useEffect(() => {
-  //  console.log(todos);
-  //   if (stateLength > todos.length) {
-  //     for (let i = 0; i < todos.length; i ++) {
-  //       if (todos[i].stars > 0) {
-  //         setAlarm(i);
-  //       };
-  //     };
-  //     setStateLength(todos.length);
-  //   }
-  // },[todos.length]);
 
   useEffect(() => {
     console.log(todos);
@@ -231,9 +178,6 @@ const App = () => {
             onClick={() => {
               document.getElementById('new-tooltip').style.opacity = '0';
               setTodos([]);
-              // or refresh the whole page by:
-              // window.location.reload();
-              // return false;
             }}
           />
           <span id="new-tooltip">start a new page</span>
@@ -277,10 +221,9 @@ const App = () => {
         </div>
         {bell ? <span id="ring-box"><p>Time is up! <br></br>Did you complete your task?</p></span> : null}
         <p className="extra-text">
-          * On every attempt of changing the timer for your item, an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of 'postponing'. Once the timer is set, the alarm will ring at the first submitted time. 
+          * On every added timer for your item, an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of the amount of reminders for the task. Once the timers are set, the alarm will ring for every submitted time. 
         <br></br><br></br>
-          * Once the alarm rang for your task,
-          there is no possibility to delete or amend the item. In this way you will be able to see what you achieved throughout, and by the end of the day.
+          * Once the alarm rang for your task there is no possibility to delete or amend the item. In this way you will be able to see what you achieved throughout, and by the end of the day.
       </p>
       </div>
     </div>
