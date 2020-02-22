@@ -46,7 +46,6 @@ const App = () => {
     };
 
     const newTodos = [...todos];
-    // is the following really needed???
     // newTodos[index].timer = 0; 
     newTodos.splice(index, 1);
     setTodos(newTodos);
@@ -124,34 +123,34 @@ const App = () => {
 
   //Ring Alarm Function
   const ringAlarm = (index) => {
-      // in case you only want the first submitted alarm to be ringing and cancel every after, do this if statement:
-      // if (todos[index].timer !== -10) {
+    // in case you only want the first submitted alarm to be ringing and cancel every after, do this if statement:
+    // if (todos[index].timer !== -10) {
 
-        todos[index].timer = -1;
+    todos[index].timer = -1;
 
-        setBell(true);
+    setBell(true);
 
-        if (sound === true) {
-          timerSound.play()
-          const playSound = setInterval(() => {
-            timerSound.play()
-          }, 1500);
+    if (sound === true) {
+      timerSound.play()
+      const playSound = setInterval(() => {
+        timerSound.play()
+      }, 1500);
 
-          setTimeout(() => {
-            clearInterval(playSound);
-          }, 4500);
-        };
+      setTimeout(() => {
+        clearInterval(playSound);
+      }, 4500);
+    };
 
-        const window = document.getElementById('ring-box');
-        window.style.opacity = '1';
-        window.style.transform = 'translateX(12%)';
+    const window = document.getElementById('ring-box');
+    window.style.opacity = '1';
+    window.style.transform = 'translateX(12%)';
 
-        setTimeout(() => {
-          window.style.transform = 'translateX(-100%)';
-        }, 4500);
+    setTimeout(() => {
+      window.style.transform = 'translateX(-100%)';
+    }, 4500);
 
-        todos[index].timer = -10;
-      // };
+    todos[index].timer = -10;
+    // };
   };
 
   //Toggle Sound via Button
@@ -159,6 +158,17 @@ const App = () => {
     let lineThrough = document.querySelector('.line-through');
     sound === true ? lineThrough.style.display = 'none' : lineThrough.style.display = 'block';
   };
+
+  // Test Code
+  // Fix Function for several alarms set at same time, updated state
+  const multipleAlarm = () => {
+    todos.forEach((e) => {
+      if (e.timer === -1) {
+        console.log(e.text + ' is ringing! timer value is: ' + e.timer);
+      }
+    });
+  };
+  multipleAlarm();
 
   useEffect(() => {
     console.log(todos);
@@ -221,7 +231,7 @@ const App = () => {
         </div>
         {bell ? <span id="ring-box"><p>Time is up! <br></br>Did you complete your task?</p></span> : null}
         <p className="extra-text">
-          * On every added timer for your item, an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of the amount of reminders for the task. Once the timers are set, the alarm will ring for every submitted time. 
+          * On every added timer for your item, an additional asterix symbol <span style={{ color: 'rgba(150, 150, 225, 1)' }}>(*)</span> will appear on your task to keep track of the amount of reminders for the task. Once the timers are set, the alarm will ring for every submitted time.
         <br></br><br></br>
           * Once the alarm rang for your task there is no possibility to delete or amend the item. In this way you will be able to see what you achieved throughout, and by the end of the day.
       </p>

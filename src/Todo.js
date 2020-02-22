@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, deleteTodo }) => {
   return (
