@@ -22,7 +22,7 @@ const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, 
           {todo.completed ? <i className="fa fa-undo"></i> : <i className="fa fa-check"></i>}
         </button>
         
-        {todo.timer < 0 ?
+        {todo.timer ?
           <button className="delete-button-2">
             <i className="fa fa-times"></i>
           </button> : <button className="delete-button" onClick={() => deleteTodo(index)}>

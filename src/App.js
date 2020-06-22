@@ -21,9 +21,17 @@ const App = () => {
 
   //Todo Functions
   const addTodo = (text) => {
-    const newTodos = [...todos, { text }];
-    setTodos(newTodos);
-    // setStateLength(todos.length);
+    if (todos.length < 15) {
+      const newTodos = [...todos, { text }];
+      setTodos(newTodos);
+      // setStateLength(todos.length);
+    } else {
+      const maxItems = document.querySelector(".max-items");
+      maxItems.style.display = 'block';
+      setTimeout(() => {
+        maxItems.style.display = 'none';
+      }, 2000);
+    };
   };
 
   const completeTodo = (index) => {

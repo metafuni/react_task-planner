@@ -146,10 +146,30 @@ body {
 }
 
 .todo {
+    position: relative;
     font-size: 1.25rem;
     margin: .75rem auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     transition: 0.3s;
+}
+
+.todo .max-items {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    font-size: .95rem;
+    color: rgb(207, 14, 0);
+    background: rgba(227, 235, 255, 0.85);
+    border: 1px solid rgba(207, 14, 0, 0.822);
+    padding: .1rem .35rem;
+    border-radius: .5rem;
+    animation: flash .5s forwards linear infinite;
+    z-index: 10;
+}
+
+.todo .max-items i {
+    margin-right: .25rem;
 }
 
 .todo .input {

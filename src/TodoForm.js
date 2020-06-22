@@ -21,6 +21,7 @@ const TodoForm = ({ addTodo }) => {
             onChange={e => setValue(e.target.value)}
             value={value}
           ></input>
+          <div className="max-items"><i className="fa fa-exclamation"></i>max 15 items</div>
         </form>
       </div>
     );
