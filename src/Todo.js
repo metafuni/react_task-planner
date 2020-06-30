@@ -36,7 +36,7 @@ const Todo = ({ todo, index, error, timerTodo, setTime, setAlarm, completeTodo, 
             <span style={{ color: 'black' }}>Set timer for: </span><br></br>
             <span className="todo-text" style={{ fontStyle: 'italic' }}>{todo.text}</span>
           </label><br></br>
-          <input type="time" id="timer-input" name="timer-input" min="09:00" max="23:00" onChange={setTime} required></input>
+          <input type="time" id="timer-input" name="timer-input" min="09:00" max="17:00" onChange={setTime} required></input>
           {error !== '' ? <span id="error-message"><i className="fa fa-exclamation-circle"></i> {error}</span> : null}
           <input type="submit" id="set-timer-button" value="set timer" onClick={() => setAlarm(index)}></input>
         </div>

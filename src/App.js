@@ -12,7 +12,6 @@ const App = () => {
   const [error, setError] = useState('');
   const [bell, setBell] = useState(false);
   const [sound, setSound] = useState(true);
-  // const [stateLength, setStateLength] = useState(todos.length);
 
   //Define Sound Constants
   const completedSound = new Audio('/completed.wav');
@@ -24,7 +23,6 @@ const App = () => {
     if (todos.length < 15) {
       const newTodos = [...todos, { text }];
       setTodos(newTodos);
-      // setStateLength(todos.length);
     } else {
       const maxItems = document.querySelector(".max-items");
       maxItems.style.display = 'block';
@@ -45,7 +43,6 @@ const App = () => {
   };
 
   const deleteTodo = (index) => {
-    // setTodos(todos[index].deleted = true);
     setTodos(todos[index].completed = false);
     setTodos(todos[index].timer = undefined);
 
@@ -54,10 +51,8 @@ const App = () => {
     };
 
     const newTodos = [...todos];
-    // newTodos[index].timer = 0; 
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    // setStateLength(todos.length);
     setBell(false);
   };
 
@@ -128,6 +123,11 @@ const App = () => {
       ringAlarm(index);
     }, timerValue);
   };
+
+  //TESTCODE
+  const now = new Date();
+    console.log(now);
+  //TESTCODE
 
   //Ring Alarm Function
   const ringAlarm = (index) => {

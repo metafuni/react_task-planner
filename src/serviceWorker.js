@@ -20,19 +20,6 @@ const isLocalhost = Boolean(
     )
 );
 
-const CACHE_NAME = 'task-planner-cache';
-const urlsToCache = [
-  '/',
-  '/favicon.png',
-  '/manifest.json',
-  '/asset-manifest.json',
-  '/service-worker.js',
-  '/index.html',
-  '/static/js/2.197ae398.chunk.js',
-  '/static/js/main.debb3e81.chunk.js',
-  '/static/js/runtime-main.e269c803.js'
-];
-
 export function register(config) {
   console.log('service worker called');
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
