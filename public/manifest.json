@@ -1,6 +1,6 @@
 {
-  "short_name": "Task Planner App",
-  "name": "React Task Planner",
+  "short_name": "Office Task Planner App",
+  "name": "Office Task Planner",
   "icons": [
     {
       "src": "main-icon.png",

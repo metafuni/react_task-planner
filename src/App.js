@@ -124,11 +124,6 @@ const App = () => {
     }, timerValue);
   };
 
-  //TESTCODE
-  const now = new Date();
-    console.log(now);
-  //TESTCODE
-
   //Ring Alarm Function
   const ringAlarm = (index) => {
     // in case you only want the first submitted alarm to be ringing and cancel every after, do this if statement:
@@ -167,21 +162,6 @@ const App = () => {
     sound === true ? lineThrough.style.display = 'none' : lineThrough.style.display = 'block';
   };
 
-  // Test Code
-  // Fix Function for several alarms set at same time, updated state
-  const multipleAlarm = () => {
-    todos.forEach((e) => {
-      if (e.timer === -1) {
-        console.log(e.text + ' is ringing! timer value is: ' + e.timer);
-      }
-    });
-  };
-  multipleAlarm();
-
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
-
   return (
     <div className="App">
       <div className="overlay"></div>
@@ -214,7 +194,7 @@ const App = () => {
           <span className="line-through"></span>
         </div>
         <h1 className="title">
-          React Task Planner
+          Office Task Planner
       </h1>
         <p className="intro-text">
           Add any of your tasks for the day in this task planner and set the reminders with the timer function. <br></br><br></br>The timer function can only
